@@ -10,13 +10,13 @@ The topic details are following.
 
 
 #### 1.  Python Programming
- - [Link to the table of content](https://www.programiz.com/python-programming)
-    1.1 Python Introduction
-    1.2 Python Flow Control
-    1.3 Python Functions
-    1.4 Python Datatypes
-    1.5 Python Files
-    1.6 Python Object & Class
+ - [Link to the table of content](https://www.programiz.com/python-programming)  
+    1.1 Python Introduction  
+    1.2 Python Flow Control  
+    1.3 Python Functions  
+    1.4 Python Datatypes  
+    1.5 Python Files  
+    1.6 Python Object & Class  
   
 
   
