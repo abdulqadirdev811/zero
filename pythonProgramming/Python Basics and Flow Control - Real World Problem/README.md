@@ -24,15 +24,12 @@ First, we need to split our titles into sets of words so that the words in a set
 
 
 
-## Twitter Feature: Add Likes (strings)
+## Insertion Sort (sort)
 
-[Source 1 URL](https://www.educative.io/blog/crack-coding-interview-real-world-problems#where)
+[Source 1 URL]([https://www.educative.io/blog/crack-coding-interview-real-world-problems#where](https://www.geeksforgeeks.org/insertion-sort/))
 
 
 
 ### Description
 
-Twitter is a popular social media platform. Imagine you’re a Twitter developer, and your team must create an API that calculates the number of likes on a given person’s Tweets. 
-The data is already extracted and stored in a simple text file for you. All of the values should remain strings and cannot be converted into integers. We must do digit-by-digit addition due these restrictions. 
-  
-**Task:** Create an API that calculates the total number of likes on a person’s Tweets. Create a module that takes two numbers and returns the sum of the numbers.
+To sort an array of size N in ascending order iterate over the array and compare the current element (key) to its predecessor, if the key element is smaller than its predecessor, compare it to the elements before. Move the greater elements one position up to make space for the swapped element.
