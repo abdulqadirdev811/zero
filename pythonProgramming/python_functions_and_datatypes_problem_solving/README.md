@@ -13,7 +13,7 @@ Given a sorted array A (sorted in ascending order), having N integers, find if t
 
 Time Complexity
     * Naïve Approach using loops :  O(n2). 
-    * Optimal approach using two pointer algorithm :O(n log n)  
+    * Optimal approach using two pointer algorithm :O(n log n).  
 
 **TASK** we have to find a pair from a list  whose sum is equal to specific vale X and return the pair and X.
 
