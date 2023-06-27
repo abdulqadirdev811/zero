@@ -12,8 +12,8 @@ Our meeting times can be listed as follows: {{2, 8}, {3, 4}, {3, 9}, {5, 11}, {8
 Given a sorted array A (sorted in ascending order), having N integers, find if there exists any pair of elements (A[i], A[j]) such that their sum is equal to X.
 
 Time Complexity
-    * Naïve Approach using loops :  O(n2).
-    * Optimal approach using two pointer algorithm :O(n log n)
+    * Naïve Approach using loops :  O(n2). 
+    * Optimal approach using two pointer algorithm :O(n log n)  
 
 **TASK** we have to find a pair from a list  whose sum is equal to specific vale X and return the pair and X.
 
