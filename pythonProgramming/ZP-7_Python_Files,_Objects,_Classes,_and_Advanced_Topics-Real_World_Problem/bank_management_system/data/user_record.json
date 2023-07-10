@@ -1,0 +1,14 @@
+[
+    {
+        "usr_account": "ab-0011",
+        "usr_password": "qwerty321",
+        "usr_balance": 19110,
+        "usr_phone": "032145553"
+    },
+    {
+        "usr_account": "ab-0022",
+        "usr_password": "bbbb",
+        "usr_balance": 0,
+        "usr_phone": "03337398009"
+    }
+]
