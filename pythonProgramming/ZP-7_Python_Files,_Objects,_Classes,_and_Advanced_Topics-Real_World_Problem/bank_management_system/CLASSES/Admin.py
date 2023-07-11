@@ -15,7 +15,7 @@ class Admin():
             msg = ""
 
             if usr_account and usr_password:
-                account_exist = self.search_json_file(
+                account_exist = self._db_obj.search_json_file(
                     key="usr_account", value=usr_account)[0]
                 # print("user balance !!!!!!! >>>>>>>>", usr_balance)
                 if not account_exist:
@@ -41,7 +41,7 @@ class Admin():
         try:
             msg = ""
             if usr_account:
-                account_exist = self.search_json_file(
+                account_exist = self._db_obj.search_json_file(
                     key="usr_account", value=usr_account)[0]
                 if account_exist:
                     msg = self.delete_json(usr_account=usr_account)
@@ -56,7 +56,7 @@ class Admin():
     def update_user(self, usr_account=None, user_pass=None, user_phone_number=None, balance=None) -> str:
         msg = ""
         if usr_account and (user_pass or user_phone_number):
-            account_exist = self.search_json_file(
+            account_exist = self._db_obj.search_json_file(
                 key="usr_account", value=usr_account)[0]
             print("account_exist >>> ", account_exist)
             if account_exist:

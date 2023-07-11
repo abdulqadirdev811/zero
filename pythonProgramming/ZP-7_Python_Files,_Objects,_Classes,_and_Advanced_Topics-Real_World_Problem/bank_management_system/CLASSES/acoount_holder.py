@@ -12,7 +12,7 @@ class AccountHolder():
     def transection(self, receiver_account=None, amount=None):
 
         if receiver_account and amount:
-            rslt = self.search_json_file(
+            rslt = self._db_obj.search_json_file(
                 key="usr_account", value=receiver_account)
             check_receiver_account = rslt[0]
             print("rslt1 >>", rslt[2])
@@ -21,7 +21,7 @@ class AccountHolder():
 
             #print("check_receiver_account >> ", check_receiver_account)
             if check_receiver_account:
-                sender_details = self.search_json_file(
+                sender_details = self._db_obj.search_json_file(
                     key="usr_account", value = self.usr_account)
                 sender_acount_detail = sender_details[2]
                 #print("amount >>>>>>>>>>>.",sender_acount_detail["usr_balance"] )
