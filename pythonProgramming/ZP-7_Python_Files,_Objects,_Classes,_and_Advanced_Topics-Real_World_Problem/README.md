@@ -85,22 +85,5 @@ Here are the details of the users and thier usage regarding to our bookshop mana
 *  **accountHolder**
 
 
-### 3. CLASSES INHERITANCE GRAPHS.
-* **Admin Class**
-```mermaid
-  graph TD;
-      jsonOperation -->Admin;      
-```
-* **accountHolder Class**
-  ```mermaid
-  graph TD;
-  jsonOperation-->accountHolder;
-  ```
 
-
-* **Cashier Class**
-  ```mermaid
-  graph TD;
-      jsonOperation -->Cashier; 
-```
 
