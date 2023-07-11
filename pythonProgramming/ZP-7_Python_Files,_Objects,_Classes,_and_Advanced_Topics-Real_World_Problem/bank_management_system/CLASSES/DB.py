@@ -1,6 +1,6 @@
 import json
 print("Hello!!")
-class jsonOperation:
+class DB:
     def __init__(self,file) -> None:
         self.file = file
 

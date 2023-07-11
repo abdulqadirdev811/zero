@@ -1,13 +1,13 @@
-from CLASSES.json_operation import jsonOperation
+from CLASSES.DB import DB
 class Admin():
     def __init__(self, file):
         pass
         #print("constructor type(self.file) ---> ", type(self.file))
-        self._cashier_obj = jsonOperation(file) 
+        self._db_obj = DB(file) 
         pass
 
     def __getattr__(self, name):
-        return getattr(self._cashier_obj, name)
+        return getattr(self._db_obj, name)
 
     def create_user(self, usr_account=None, usr_password=None, usr_balance=0, usr_phone=None):
         '''It will append the user into the json file if it already not exists'''

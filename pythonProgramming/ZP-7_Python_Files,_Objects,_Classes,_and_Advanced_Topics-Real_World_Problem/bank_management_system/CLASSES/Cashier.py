@@ -1,11 +1,11 @@
-from CLASSES.json_operation import jsonOperation
+from CLASSES.DB import DB
 
 class Cashier():
     def __init__(self, file) -> None:
-        self.cashier_obj = jsonOperation(file) 
+        self.db_obj = DB(file) 
         pass
 
     def __getattr__(self, name):
-        return getattr(self.cashier_obj, name)
+        return getattr(self.db_obj, name)
     
   

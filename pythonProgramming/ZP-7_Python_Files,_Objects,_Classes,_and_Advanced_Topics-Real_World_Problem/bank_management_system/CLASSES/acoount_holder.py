@@ -1,13 +1,13 @@
-from CLASSES.json_operation import jsonOperation
-class accountHolder():
+from CLASSES.DB import DB
+class AccountHolder():
     def __init__(self, usr_account, usr_pass, file) -> None:
         self.usr_account = usr_account
         self.usr_pass = usr_pass
-        self._cashier_obj = jsonOperation(file) 
+        self._db_obj = DB(file) 
         pass
 
     def __getattr__(self, name):
-        return getattr(self._cashier_obj, name)
+        return getattr(self._db_obj, name)
     
     def transection(self, receiver_account=None, amount=None):
 
@@ -45,9 +45,9 @@ class accountHolder():
 
     @classmethod
     def check_account_details(cls, usr_account, usr_pass, file):
-        account_verfied = jsonOperation.verify_account(
+        account_verfied = DB.verify_account(
             usr_account=usr_account, usr_pass=usr_pass, file=file)[0]
         print(account_verfied)
         if account_verfied:
-            return accountHolder(usr_account, usr_pass, file)
+            return AccountHolder(usr_account, usr_pass, file)
 

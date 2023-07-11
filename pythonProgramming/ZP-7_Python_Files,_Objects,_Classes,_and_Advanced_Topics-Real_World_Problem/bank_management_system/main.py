@@ -1,7 +1,7 @@
-from CLASSES.acoountHolder import accountHolder
-from CLASSES.Admin import Admin
-from CLASSES.Cashier import Cashier
-from CLASSES.json_operation import jsonOperation
+from CLASSES.acoount_holder import AccountHolder
+from CLASSES.admin import Admin
+from CLASSES.cashier import Cashier
+from CLASSES.DB import DB
 
 PATH = r"C:\Users\DELL\Documents\internship\pythonProgramming\ZP-7_Python_Files,_Objects,_Classes,_and_Advanced_Topics-Real_World_Problem\bank_management_system\data\user_record.json"
 file = open(PATH, mode='r+')
@@ -39,8 +39,8 @@ cashier_obj = Cashier(file)
 rslt2 = cashier_obj.search_json_file(key="usr_account", value="ab-0022")
 print("rslt 2 >>> ", rslt2)
 
-accountHolder_obj = accountHolder.check_account_details(
+AccountHolder_obj = AccountHolder.check_account_details(
     usr_account = "ab-0022", usr_pass = "bbbb", file = file)
 
-print("pass pass ", accountHolder_obj.usr_pass)
-accountHolder_obj.transection(receiver_account="ab-0011", amount=500)
+print("pass pass ", AccountHolder_obj.usr_pass)
+AccountHolder_obj.transection(receiver_account="ab-0011", amount=500)
