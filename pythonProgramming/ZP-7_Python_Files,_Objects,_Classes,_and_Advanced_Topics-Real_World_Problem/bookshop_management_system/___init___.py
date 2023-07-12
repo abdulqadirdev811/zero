@@ -1,77 +1,70 @@
-import  CLASSES.Book as Book
-#from book_module import B
-from CLASSES.Supply import Supply
+from CLASSES.DB import DB
 from CLASSES.Customer import Customer
+from CLASSES.Book import Book
+from CLASSES.supplier import Supplier
+from CLASSES.order import Order
 from CLASSES.Admin import Admin
+customer_obj = Customer(customer_ID="ab-001",customer_name="abdul",customer_phone_number="0333-7398009")
+
+db_obj = DB()
+
+admin_obj = Admin(db_obj= db_obj)
+
+admin_obj.add_customer(customer_obj=customer_obj)
+admin_obj.add_customer(customer_obj=customer_obj)
+admin_obj.delete_customer(customer_obj=customer_obj)
+admin_obj.add_customer(customer_obj=customer_obj)
+
+print("customer list -->",db_obj.customer_list)
+
+book_obj = Book(book_name="Joe Story",book_ID= "BK-001",book_author="Qadir",quantity=20)
+admin_obj.add_book(book_obj=book_obj)
 
 
-admin_obj = Admin()
+print("db books record -->",db_obj.books_list)
+admin_obj.delete_book_quantity(book_obj=book_obj,quantity= 19)
+print("db books records -->",db_obj.books_list)
 
-print(Book.books_list)
-admin_obj.add_book(book_ID='001',book_name="The Hobbit")
-admin_obj.add_book(book_ID='001',book_name="The Hobbit")
-# print(Book.books_list)
-
-admin_obj.add_book(book_ID="002",book_name="lord of the rings chapter 1", quantity=20)
-
-
-admin_obj.add_book(book_ID="003",book_name="lord of the rings chapter 2", quantity=4)
-admin_obj.add_book(book_ID="004",book_name="lord of the rings chapter 3")
-admin_obj.add_book(book_ID="004",book_name="lord of the rings chapter 3")
-admin_obj.add_book(book_ID="004",book_name="lord of the rings chapter 3")
-
-admin_obj.add_book(book_ID="005",book_name="lord of the rings chapter 4")
-admin_obj.add_book(book_ID="005",book_name="lord of the rings chapter 4")
-admin_obj.add_book(book_ID="005",book_name="lord of the rings chapter 4")
-admin_obj.add_book(book_ID="005",book_name="lord of the rings chapter 4")
-admin_obj.add_book(book_ID="005",book_name="lord of the rings chapter 4")
-
-
-print("Book.books_list >> ",Book.books_list)
-
-rslt = admin_obj.search_book(book_ID="001")
-print("rslt1 >>", rslt)
-admin_obj.delete_book(book_ID="001")
-admin_obj.delete_book(book_ID="001",quantity=2)
-#admin_obj.add_book(book_ID='001',book_name="The Hobbit")
-admin_obj.delete_book(book_ID="001")
-rslt = admin_obj.search_book(book_ID="001")
-print("rslt2 >>", rslt)
-print("Book.books_list >> ",Book.books_list)
-
+print("-----> before tracking records",db_obj.warning_stocks, db_obj.out_of_stock_books)
 admin_obj.track_quantity_of_books()
-
-(Admin.warning_stocks)
-(Admin.out_of_stock_books)
-(admin_obj.order_request(order_ID="000",book_name="The Hobbit"))
-(admin_obj.order_request(order_ID="000",book_name="The Hobbit",quantity=99))
-(admin_obj.delete_order(order_ID="000"))
-print(">>>>>>>>>>>>>>>>>>>>>>")
-(admin_obj.order_request(order_ID="001",book_name="The Hobbit"))
-(admin_obj.order_request(order_ID="002",book_name="The Hobbit"))
-(admin_obj.order_request(order_ID="003",book_name="The Hobbit", quantity=100))
-
-(admin_obj.order_request(order_ID="005",book_name="lord of the rings chapter 1"))
-(admin_obj.order_request(order_ID="006",book_name="lord of the rings chapter 2"))
-(admin_obj.order_request(order_ID="007",book_name="The Hobbit", quantity=100))
+print("-----> before tracking records",db_obj.warning_stocks, db_obj.out_of_stock_books)
 
 
-print("order_request_queue ---> ",Supply.order_request_que)
-print("completed order ---> ",Supply.completed_order)
-print("rejected order ---> ",Supply.rejected_order)
-print("deleted order ---> ",Supply.deleted_order)
 
 
-sply_obj = Supply()
-sply_obj.complete_order(order_ID="003")
-sply_obj.complete_order(order_ID="003")
-sply_obj.reject_order(order_ID="002")
-sply_obj.reject_order(order_ID="002")
+supplier_obj = Supplier(supplier_ID="SP-001",supplier_name="Joe")
 
-(admin_obj.delete_order(order_ID="007"))
+admin_obj.add_suplier(supplier_obj)
+
+print("before supplier -----> ",db_obj.supplier_list)
+
+admin_obj.delete_supplier(supplier_obj)
+admin_obj.delete_supplier(supplier_obj)
+
+print("after supplier -----> ",db_obj.supplier_list)
+
+#order_ID and book_name and supplier_ID
+
+print("before requesting the order ---------> order list",db_obj.order_request_que)
+admin_obj.add_suplier(supplier_obj)
 
 
-print("order_request_queue ---> ",Supply.order_request_que)
-print("completed order ---> ",Supply.completed_order)
-print("rejected order ---> ",Supply.rejected_order)
-print("deleted order ---> ",Supply.deleted_order)
+Order(order_ID="OR-001",book_name='JOE-2')
+order_obj = Order(order_ID="OR-001",book_name='JOE-2',supplier_ID="SP-001")
+admin_obj.request_order(order_obj)
+print("after request ---------> order list",db_obj.order_request_que)
+
+admin_obj.delete_order(order_obj)
+print("deleted order list  ---> ",db_obj.deleted_order)
+
+
+admin_obj.request_order(order_obj)
+supplier_obj = Supplier(db_obj=db_obj)
+supplier_obj.reject_order(order_obj)
+
+print("rejected order ---> ",db_obj.rejected_order)
+
+
+admin_obj.request_order(order_obj)
+supplier_obj.complete_order(order_obj)
+print("completed order -->",db_obj.completed_order)

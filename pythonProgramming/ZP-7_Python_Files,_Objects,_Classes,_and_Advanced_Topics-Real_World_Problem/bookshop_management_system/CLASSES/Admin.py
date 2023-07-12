@@ -1,207 +1,198 @@
-from Customer import Customer
-from Book import Book
-from Supply import Supply
+class Admin():
+    
+    def __init__(self, admin_id=None, admin_name=None, db_obj = None) -> None:
+        self.db_obj = db_obj
+        self.admin_id = admin_id
+        self.admin_name = admin_name 
 
-class Admin(Customer, Book, Supply):
-    warning_stocks = []
-    out_of_stock_books = []
-    supplier_list = []
-    customer_list = []
-
-    def __init___(self, admin_id=None, admin_name=None) -> None:
-        pass
-
+    def __getattr__(self, name):
+        return getattr(self.db_obj,name)
+    
     def track_quantity_of_books(self) -> None:
         """
         update  the warning_stocks and out_ofstocks_books
         """
 
-        books = self.books_list
+        books = self.db_obj.books_list
         for book in books:
             if (book["quantity"]) < 6:
                 if book["quantity"] == 0:
-                    if book not in Admin.out_of_stock_books:
-                        Admin.out_of_stock_books.append(book)
+                    if book not in self.db_obj.out_of_stock_books:
+                        self.db_obj.out_of_stock_books.append(book)
                 else:
-                    if book not in Admin.warning_stocks:
-                        Admin.warning_stocks.append(book)
+                    if book not in self.db_obj.warning_stocks:
+                       self.db_obj.warning_stocks.append(book)
 
-    
-    def order_request(self, order_ID=None,supplier_ID =None , book_name=None, book_author=None, quantity=1) -> None:
-        
-        print("------>  0")
-        if order_ID and book_name and supplier_ID :
-            #print("----> 1 supplier list  : >> ",Admin.supplier_list)
-            find_supplier = [sup for sup in Admin.supplier_list if sup["supplier_ID"] == supplier_ID]
-            print("1")
-            if  len(find_supplier) > 0:
-                book_dict = {
-                    "order_ID": order_ID,
-                    "supplier_ID": supplier_ID,
-                    "book_name": book_name,
-                    "book_author": book_author,
-                    "quantity": quantity
-                }
-                # print("book_dict >> ", book_dict)
-                print("2")
-                find_order = [
-                    order for order in Supply.order_request_que if order["order_ID"] == order_ID]
-                if len(find_order) < 1 :
-                    book_in_order_queue = [
-                        book for book in Supply.order_request_que if book["order_ID"] == order_ID]
-                    # print("book_in_order_queue >>> ",book_in_order_queue)
-                    if len(book_in_order_queue) == 0:
-
-                        Supply.order_request_que.append(book_dict)
-                        #print(Supply.order_request_que)
-                        print("Requested the order successfully !!")
-                    else:
-                        # print(book_dict["quantity"],"<<<>>>",book_in_order_queue["quantity"])
-                        print("order already in order quueue >> ", book_in_order_queue)
-                        '''book_dict["quantity"] = int(
-                            book_dict["quantity"]) + int(book_in_order_queue[0]["quantity"])
-                        Supply.order_request_que.remove(book_in_order_queue[0])
-                        Supply.order_request_que.append(book_dict)'''
-                else:
-                    print(f"Order already exist {order_ID}")
-            else:
-                print(f"No Supplier against ID {supplier_ID}")
-        else:
-            print(f"invalid arguments!!  ")
-    def delete_order(self, order_ID=None) -> None:
-        '''
-        cancel the order
-        '''
-        if order_ID:
-            my_order = [
-                order for order in Supply.order_request_que if order["order_ID"] == order_ID]
-            if len(my_order) > 0:
-                order_details = my_order[0]
-                Supply.order_request_que.remove(order_details)
-                Supply.deleted_order.append(order_details["order_ID"])
-                Supply.deleted_order = list(set(Supply.deleted_order))
-                print("order deleted successfully ---> ", order_details)
-
-            else:
-                print(f"order does note exist against ID ---> {order_ID}")
-
-    def add_customer(self, customer_ID=None, customer_name=None, customer_phone_number=None) -> str:
+    def add_customer(self, customer_obj= None) -> str:
         message = ""
-        if customer_ID:
+        if customer_obj.customer_ID:
             find_customer = [
-                customer for customer in Admin.customer_list if customer["customer_ID"] == customer_ID]
+                customer for customer in self.db_obj.customer_list if customer["customer_ID"] == customer_obj.customer_ID]
             if len(find_customer) > 0:
                 message = f"Insertion Failed !!! User Already Exists {find_customer[0]}"
             else:
                 user_dict = {
-                    "customer_ID": customer_ID,
-                    "customer_name": customer_name,
-                    "customer_phone_number": customer_phone_number
+                    "customer_ID": customer_obj.customer_ID,
+                    "customer_name": customer_obj.customer_name,
+                    "customer_phone_number": customer_obj.customer_phone_number
                 }
-                Admin.customer_list.append(user_dict)
+                self.db_obj.customer_list.append(user_dict)
                 message = f"record is inserted successfully {user_dict} !!!"
         print(message)
         return message
     
 
 
-    def delete_customer(self, customer_ID=None) -> None:
+    def delete_customer(self, customer_obj= None) -> None:
         message = ""
-        if customer_ID:
+        if customer_obj.customer_ID:
             find_customer = [
-                customer for customer in Admin.customer_list if customer["customer_ID"] == customer_ID]
+                customer for customer in self.db_obj.customer_list if customer["customer_ID"] == customer_obj.customer_ID]
             if len(find_customer) > 0:
-                Admin.customer_list.remove(find_customer[0])
+                self.db_obj.customer_list.remove(find_customer[0])
                 message = f"Deleted the data successfully  {find_customer[0]}"
             else:
 
-                message = f"Deletion Failed No Record Is Found against {customer_ID} !!!"
+                message = f"Deletion Failed No Record Is Found against {customer_obj.customer_ID} !!!"
         print(message)
 
-    def add_book(self, book_ID=None, book_name=None, book_category=None, book_author=None, quantity=1) -> None:
+    def add_book(self, book_obj) -> None:
         # print(Book.books_list)
         message = ""
-        if book_ID:
-            if not Book.check_book_existance(book_ID):
-                if book_name not in Book.books_list:
+        if book_obj.book_ID:
+            if not self.db_obj.check_book_existance(book_obj.book_ID):
+                
+                if book_obj.book_name not in self.db_obj.books_list:
                     book_dict = {
-                        "book_ID": book_ID,
-                        "book_name": book_name,
-                        "book_category": book_category,
-                        "book_author": book_author,
-                        "quantity": quantity
+                        "book_ID": book_obj.book_ID,
+                        "book_name": book_obj.book_name,
+                        "book_category": book_obj.book_category,
+                        "book_author": book_obj.book_author,
+                        "quantity": book_obj.quantity
                     }
-                    Book.books_list.append(book_dict)
+                    self.db_obj.books_list.append(book_dict)
                     message = f"Added new Book {book_dict}"
                     # print(Book.books_list)
             else:
 
-                book_dict = Book.get_dictionary_from_list_of_dictionaries(
-                    Book.books_list, book_ID)
-                Book.books_list.remove(book_dict)
-                book_dict["quantity"] = int(book_dict["quantity"]) + quantity
-                Book.books_list.append(book_dict)
-                message = f'Add stock : {quantity} Against Book_ID {book_dict["book_ID"]}'
+                book_dict = self.db_obj.get_dictionary_from_list_of_dictionaries(
+                    self.db_obj.books_list, book_obj.book_ID)
+                self.db_obj.books_list.remove(book_dict)
+                book_dict["quantity"] = int(book_dict["quantity"]) + book_obj.quantity
+                self.db_obj.books_list.append(book_dict)
+                message = f'Add stock : {book_obj.quantity} Against Book_ID {book_dict["book_ID"]}'
 
-    def add_suplier(self, supplier_ID=None, supplier_name=None, supplier_phone_number=None) -> str:
+    def add_suplier(self,supplier_obj = None) -> str:
         message = ""
-        if supplier_ID and supplier_name:
+        
+        if supplier_obj.supplier_ID and supplier_obj.supplier_name:
             find_supplier = [
-                supplier for supplier in Admin.supplier_list if supplier["supplier_ID"] == supplier_ID]
+                supplier for supplier in self.db_obj.supplier_list if supplier["supplier_ID"] == supplier_obj.supplier_ID]
             if len(find_supplier) > 0:
                 message = f"Insertion Failed !!! User Already Exists {find_supplier[0]}"
             else:
                 user_dict = {
-                    "supplier_ID": supplier_ID,
-                    "supplier_name": supplier_name,
-                    "supplier_phone_number": supplier_phone_number
+                    "supplier_ID": supplier_obj.supplier_ID,
+                    "supplier_name": supplier_obj.supplier_name,
+                    "supplier_phone_number": supplier_obj.supplier_phone_number
                 }
-                Admin.supplier_list.append(user_dict)
+                self.db_obj.supplier_list.append(user_dict)
                 message = f"record is inserted successfully {user_dict} !!!"
         #print(message)
-        return message   
-    def delete_supplier(self, supplier_ID=None) -> None:
+        return message  
+
+
+    def delete_supplier(self, supplier_obj=None) -> None:
         message = ""
-        if supplier_ID:
+        
+        if supplier_obj.supplier_ID:
             find_supplier = [
-                customer for customer in Admin.supplier_list if customer["supplier_ID"] == supplier_ID]
+                customer for customer in self.db_obj.supplier_list if customer["supplier_ID"] == supplier_obj.supplier_ID]
             if len(find_supplier) > 0:
-                Admin.supplier_list.remove(find_supplier[0])
+                self.db_obj.supplier_list.remove(find_supplier[0])
                 message = f"Deleted the supplier successfully  {find_supplier[0]}"
             else:
 
-                message = f"Deletion Failed No Record Is Found against {supplier_ID} !!!"
+                message = f"Deletion Failed No Record Is Found against {supplier_obj.supplier_ID} !!!"
         print(message)     
 
-    '''def search_book(self, book_ID= None,book_name=None) -> dict:
-        book = {}
-        message = "Book Found !!"
-        if Book.check_book_existance(book_ID):
-            book = Book.get_dictionary_from_list_of_dictionaries(
-                Book.books_list, book_ID)
-            if int(book["quantity"]) == 0:
-                message = "Warning Book Out Of Stock!!"
 
-        return message, book
-    '''
 
-    def delete_book(self, book_ID=None, quantity=1) -> None:
+    def delete_book_quantity(self, book_obj,quantity= 1) -> None:
         message = ""
-        if book_ID:
-            if Book.check_book_existance(book_ID):
-                book_dict = Book.get_dictionary_from_list_of_dictionaries(
-                    Book.books_list, book_ID)
+        if book_obj.book_ID:
+            if self.db_obj.check_book_existance(book_obj.book_ID):
+                book_dict = self.db_obj.get_dictionary_from_list_of_dictionaries(
+                    self.db_obj.books_list, book_obj.book_ID)
                 if int(book_dict["quantity"]) == 0:
                     message = (
-                        f"Message -->  No book in the record against the {book_ID}")
+                        f"Message -->  No book in the record against the {book_obj.book_ID}")
 
                 elif int(book_dict["quantity"]) - quantity > -1:
-                    Book.books_list.remove(book_dict)
+                    self.db_obj.books_list.remove(book_dict)
                     book_dict["quantity"] = int(
                         book_dict["quantity"]) - quantity
-                    Book.books_list.append(book_dict)
-                    message = f"Message --> Delete  {quantity} book/s against book_ID {book_ID} successfully !!"
+                    self.db_obj.books_list.append(book_dict)
+                    message = f"Message --> Delete  {quantity} book/s against book_ID {book_obj.book_ID} successfully !!"
                 else:
                     message = (
-                        f"Message --> Delete operation failed!! \n the number of book against ID {book_ID} are  {book_dict['quantity'] }  and you want to remove {quantity}")
+                        f"Message --> Delete operation failed!! \n the number of book against ID {book_obj.book_ID} are  {book_dict['quantity'] }  and you want to remove {quantity}")
         print(message)
+
+
+    def request_order(self,order_obj) -> None:
+        #print("------>  0")
+        #order_obj.
+        if order_obj.order_ID and order_obj.book_name and order_obj.supplier_ID :
+            #print("----> 1 supplier list  : >> ",Admin.supplier_list)
+            find_supplier = [sup for sup in self.db_obj.supplier_list if sup["supplier_ID"] == order_obj.supplier_ID]
+            #print("1")
+            if  len(find_supplier) > 0:
+                book_dict = {
+                    "order_ID": order_obj.order_ID,
+                    "supplier_ID": order_obj.supplier_ID,
+                    "book_name": order_obj.book_name,
+                    "quantity": order_obj.quantity
+                }
+                
+                find_order = [
+                    order for order in self.db_obj.order_request_que if order["order_ID"] == order_obj.order_ID]
+                if len(find_order) < 1 :
+                    book_in_order_queue = [
+                        book for book in self.db_obj.order_request_que if book["order_ID"] == order_obj.order_ID]
+                    # print("book_in_order_queue >>> ",book_in_order_queue)
+                    if len(book_in_order_queue) == 0:
+
+                        self.db_obj.order_request_que.append(book_dict)
+                        #print(Supply.order_request_que)
+                        print("Requested the order successfully !!")
+                    else:
+                        # print(book_dict["quantity"],"<<<>>>",book_in_order_queue["quantity"])
+                        print("order already in order quueue >> ", self.db_obj.book_in_order_queue)
+                        '''book_dict["quantity"] = int(
+                            book_dict["quantity"]) + int(book_in_order_queue[0]["quantity"])
+                        Supply.order_request_que.remove(book_in_order_queue[0])
+                        Supply.order_request_que.append(book_dict)'''
+                else:
+                    print(f"Order already exist {order_obj.order_ID}")
+            else:
+                print(f"No Supplier against ID {order_obj.supplier_ID}")
+        else:
+            print(f"invalid arguments!! ")
+    def delete_order(self, order_obj) -> None:
+        '''
+        cancel the order
+        '''
+        if order_obj.order_ID:
+            my_order = [
+                order for order in self.db_obj.order_request_que if order["order_ID"] == order_obj.order_ID]
+            if len(my_order) > 0:
+                order_details = my_order[0]
+                self.db_obj.order_request_que.remove(order_details)
+                self.db_obj.deleted_order.append(order_details["order_ID"])
+                self.db_obj.deleted_order = list(set(self.db_obj.deleted_order))
+                print("order deleted successfully ---> ", order_details)
+
+            else:
+                print(f"order does note exist against ID ---> {order_obj.order_ID}")    
+

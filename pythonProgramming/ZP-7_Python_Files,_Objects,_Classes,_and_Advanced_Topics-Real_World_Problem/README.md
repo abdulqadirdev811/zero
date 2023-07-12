@@ -37,24 +37,9 @@ Here are the details of the users and thier usage regarding to our bookshop mana
 ### 2. USED CLASSES.  
 *  **Book** 
 *  **Customer**
-*  **Supply**
+*  **Supplier**
 *  **Admin**
-
-### 3. CLASSES INHERITANCE GRAPHS.
-* **Admin Class**
-```mermaid
-  graph TD;
-      Book -->Custumer
-      Custumer -->Admin
-      Book-->Admin;
-      Supply -->Admin;  
-
-      
-```
-* **Customer Class**
-  ```mermaid
-  graph TD;
-      Book -->Custumer; 
+*  **Order**
 
 
 
