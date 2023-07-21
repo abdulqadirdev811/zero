@@ -1,7 +1,7 @@
 # OOP Real World Example
 
 
-[USEFULL URL](https://stackoverflow.com/questions/29214888/typeerror-cannot-create-a-consistent-method-resolution-order-mro)
+
 ## LEARNING
   * Implemented an OOP based system.
   * Implemented the class inheritance.
@@ -11,7 +11,7 @@
 
 
 
-### BOOKSHO MANAGEMENT SYSTEM
+### BOOKSHOP MANAGEMENT SYSTEM
 
 A book store management system manages the data regarding to the customer, supplier and Admin.  
 In this project the concepts of oops e.g constructor, inheritance and MRO were implemented.
@@ -21,7 +21,12 @@ How to handle the class varible and the usage of the class functions  are also c
 ### 1. **USERS**
 Here are the details of the users and thier usage regarding to our bookshop management system. 
 * **Customer**
-  * A user can search a book 
+  * A user can search a book
+* **Member Customer**
+  * A member customer can search a book and see the discouted price.
+* **Gold Member**
+  * A A gold member can can search a book and see the discouted price(more discounted price than a normal user).
+ 
 * **Admin**
   * An admin can check and maintain the stocks
   * Add books into the records.
