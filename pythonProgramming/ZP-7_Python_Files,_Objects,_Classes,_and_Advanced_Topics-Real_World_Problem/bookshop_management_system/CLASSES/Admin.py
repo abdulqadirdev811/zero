@@ -23,6 +23,21 @@ class Admin():
                     if book not in self.db_obj.warning_stocks:
                        self.db_obj.warning_stocks.append(book)
 
+    
+    def search_book(self, book_ID= None,book_name=None) -> dict:
+        book = {}
+        message = "Book Found !!"
+        if self.db_obj.check_book_existance(book_ID):
+            book = self.db_obj.get_dictionary_from_list_of_dictionaries(
+                self.db_obj.books_list, book_ID)
+            if int(book["quantity"]) == 0:
+                message = "Warning Book Out Of Stock!!"
+        
+        return message, book
+    
+    
+    
+    
     def add_customer(self, customer_obj= None) -> str:
         message = ""
         if customer_obj.customer_ID:
@@ -68,7 +83,8 @@ class Admin():
                         "book_name": book_obj.book_name,
                         "book_category": book_obj.book_category,
                         "book_author": book_obj.book_author,
-                        "quantity": book_obj.quantity
+                        "quantity": book_obj.quantity,
+                        "price" : book_obj.price
                     }
                     self.db_obj.books_list.append(book_dict)
                     message = f"Added new Book {book_dict}"

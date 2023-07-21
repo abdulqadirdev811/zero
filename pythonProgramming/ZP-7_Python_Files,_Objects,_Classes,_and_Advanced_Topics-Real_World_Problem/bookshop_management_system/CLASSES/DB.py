@@ -21,10 +21,16 @@ class DB:
     def check_book_existance(self, book_ID) -> bool:
         '''check if the book exists in our '''
         result = False
-        try:
-            if [book_dict for book_dict in self.books_list if book_dict["book_ID"] == book_ID]:
-                result =  True
-            
-        except Exception as e:
-            pass    
+        if book_ID:
+            try:
+                if [book_dict for book_dict in self.books_list if book_dict["book_ID"] == book_ID]:
+                    result =  True
+                
+            except Exception as e:
+                pass
+        else:
+            message = "please pass the attribute"
+            #raise AssertionError(message)
+            print(message)
+                
         return result

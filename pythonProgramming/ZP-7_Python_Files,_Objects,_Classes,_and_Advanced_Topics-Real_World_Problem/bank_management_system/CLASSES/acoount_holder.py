@@ -1,6 +1,6 @@
 from CLASSES.DB import DB
 class AccountHolder():
-    def __init__(self, usr_account, usr_pass, file) -> None:
+    def __init__(self, usr_account, usr_pass, file=None) -> None:
         self.usr_account = usr_account
         self.usr_pass = usr_pass
         self._db_obj = DB(file) 
