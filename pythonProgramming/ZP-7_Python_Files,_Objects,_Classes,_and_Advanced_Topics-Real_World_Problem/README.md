@@ -1,8 +1,7 @@
 # OOP Real World Example
 
 
-
-
+[USEFULL URL](https://stackoverflow.com/questions/29214888/typeerror-cannot-create-a-consistent-method-resolution-order-mro)
 ## LEARNING
   * Implemented an OOP based system.
   * Implemented the class inheritance.
@@ -37,10 +36,20 @@ Here are the details of the users and thier usage regarding to our bookshop mana
 ### 2. USED CLASSES.  
 *  **Book** 
 *  **Customer**
-*  **Supplier**
+*  **Supply**
 *  **Admin**
-*  **Order**
+*  **MemeberCustomer**
+*  **GoldMemeber**
 
+### 3. CLASSES INHERITANCE GRAPHS.
+* **GoldMember**
+```mermaid
+  graph TD;
+      Customer -->MemberCustomer;
+      MemberCustomer-->GoldMember
+
+      
+```
 
 
   
@@ -70,5 +79,24 @@ Here are the details of the users and thier usage regarding to our bookshop mana
 *  **accountHolder**
 
 
+### 3. CLASSES INHERITANCE GRAPHS.
+* **Admin Class**
+```mermaid
+  graph TD;
+      jsonOperation -->Admin;      
+```
+* **accountHolder Class**
+  ```mermaid
+  graph TD;
+  jsonOperation-->accountHolder;
+  ```
 
 
+* **Cashier Class**
+  ```mermaid
+  graph TD;
+      jsonOperation -->Cashier;
+  ```
+
+## USEFUL MATERIAL LINKS
+[TypeError: Cannot create a consistent method resolution order (MRO) [duplicate]](https://stackoverflow.com/questions/29214888/typeerror-cannot-create-a-consistent-method-resolution-order-mro)
